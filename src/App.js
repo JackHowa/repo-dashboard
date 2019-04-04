@@ -1,6 +1,7 @@
 import React from 'react';
-import RepoCard from './components/RepoCard';
+import RepoManager from './components/RepoManager';
+import TargetRepoNames from './constants/TargetRepoNames';
 
-const App = () => <RepoCard repoName="REACT" />;
+const App = () => <RepoManager targetRepoNames={TargetRepoNames} />;
 
 export default App;
