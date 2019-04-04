@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import AppConstants from '../constants/AppConstants';
+import RepoRoutes from '../enums/RepoRoutes';
+import RepoDisplayNames from '../enums/RepoDisplayNames';
+
+// five seconds
+const REFRESH_RATE = 5000;
 
 class RepoCard extends Component {
   constructor(props) {
@@ -10,7 +16,13 @@ class RepoCard extends Component {
 
   componentDidMount() {
     this.findStars();
-    this.interval = setInterval(() => this.findStars(), 5000);
+    this.interval = setInterval(() => this.findStars(), REFRESH_RATE);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { starGazerAmount } = this.state;
+
+    return nextState.starGazerAmount !== starGazerAmount;
   }
 
   componentWillUnmount() {
@@ -18,21 +30,24 @@ class RepoCard extends Component {
   }
 
   findStars() {
-    fetch('https://api.github.com/repos/facebook/react')
+    const { repoName } = this.props;
+    fetch(`${AppConstants.GITHUB_REPOS_API}${RepoRoutes[repoName]}`)
       .then(response => {
         return response.json();
       })
-      .then(myJson => {
-        const starGazerString = JSON.stringify(myJson.stargazers_count);
-        this.setState({ starGazerAmount: starGazerString });
+      .then(jsonResponse => {
+        const starGazerAmount = jsonResponse.stargazers_count;
+        this.setState({ starGazerAmount });
       });
   }
 
   render() {
     const { starGazerAmount } = this.state;
+    const { repoName } = this.props;
+    const repoDisplayName = RepoDisplayNames[repoName];
     return (
       <div>
-        <h1>React Star Amount</h1>
+        <h1>{repoDisplayName} Star Amount</h1>
         <p>{starGazerAmount}</p>
       </div>
     );
