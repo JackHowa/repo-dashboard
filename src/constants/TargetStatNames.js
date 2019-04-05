@@ -1,0 +1,1 @@
+export default ['STARGAZERS_COUNT', 'FORKS_COUNT', 'OPEN_ISSUES'];
