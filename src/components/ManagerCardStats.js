@@ -18,7 +18,7 @@ class ManagerCardStats extends Component {
     this.findStats();
     this.interval = setInterval(
       () => this.findStats(),
-      AppConstants.REFRESH_RATE
+      AppConstants.GITHUB_REFRESH_RATE
     );
   }
 

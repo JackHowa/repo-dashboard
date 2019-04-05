@@ -19,7 +19,7 @@ class RepoManager extends Component {
     this.countVotes();
     this.updateVotes = setInterval(
       () => this.countVotes(),
-      AppConstants.REFRESH_RATE
+      AppConstants.API_REFRESH_RATE
     );
   }
 
