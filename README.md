@@ -4,16 +4,25 @@
 
 - See front-end repos update in real-time
 - Vote on those repos
+- Check that the same email doesn't vote twice
+- Check that the same browser session doesn't have multiple voters
 
-## Ongoing Development
+## Ongoing Development (main notes, code snippets)
 
-[Trello](https://trello.com/b/7BskCx0p/best-frontend-repo)
+### [Trello](https://trello.com/b/7BskCx0p/best-frontend-repo)
 
 ## Technology
 
 - Create React App
 - Eslint and Prettier
 - Fetch
+- Github API V3
+
+## [Backend tech](https://github.com/JackHowa/repo-dashboard-backend)
+
+- Mongodb atlas
+- Mongoose
+- Express
 
 ## How To Run
 
@@ -45,3 +54,8 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Challenges
+
+- Overcoming rate limits without using server-to-server communication
+- Getting vote counts from one api route, without updating all children components
