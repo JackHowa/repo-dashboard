@@ -13,6 +13,23 @@ class RepoManager extends Component {
 
   componentDidMount() {
     this.countVotes();
+    this.updateVotes = setInterval(
+      () => this.countVotes(),
+      AppConstants.REFRESH_RATE
+    );
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { repoCounts } = this.state;
+
+    if (nextState.repoCounts !== repoCounts || nextProps !== this.props) {
+      return true;
+    }
+    return false;
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateVotes);
   }
 
   countVotes = () => {

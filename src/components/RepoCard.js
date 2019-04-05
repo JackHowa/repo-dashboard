@@ -3,9 +3,6 @@ import AppConstants from '../constants/AppConstants';
 import RepoRoutes from '../enums/RepoRoutes';
 import RepoDisplayNames from '../enums/RepoDisplayNames';
 
-// five seconds
-const REFRESH_RATE = 5000;
-
 class RepoCard extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +13,10 @@ class RepoCard extends Component {
 
   componentDidMount() {
     this.findStars();
-    this.interval = setInterval(() => this.findStars(), REFRESH_RATE);
+    this.interval = setInterval(
+      () => this.findStars(),
+      AppConstants.REFRESH_RATE
+    );
   }
 
   shouldComponentUpdate(nextProps, nextState) {
