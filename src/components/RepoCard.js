@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import AppConstants from '../constants/AppConstants';
 import RepoDisplayNames from '../enums/RepoDisplayNames';
 import RepoCardStat from './RepoCardStat';
 import ManagerCardStats from './ManagerCardStats';
 import TargetStatNames from '../constants/TargetStatNames';
 
-// may want to refactor to stateless component
 class RepoCard extends Component {
   postVote() {
     const {
@@ -30,7 +30,6 @@ class RepoCard extends Component {
     })
       .then(response => response.json())
       .then(jsonResponse => {
-        // todo: error checking
         if (jsonResponse.success === true) {
           checkVoteCount();
           toggleVoteButtons();
@@ -59,5 +58,19 @@ class RepoCard extends Component {
     );
   }
 }
+
+RepoCard.propTypes = {
+  repoName: PropTypes.string.isRequired,
+  voteCount: PropTypes.number.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  showVoteButtons: PropTypes.bool.isRequired,
+  emailAddress: PropTypes.string,
+  toggleVoteButtons: PropTypes.func.isRequired,
+  checkVoteCount: PropTypes.func.isRequired
+};
+
+RepoCard.defaultProps = {
+  emailAddress: ''
+};
 
 export default RepoCard;

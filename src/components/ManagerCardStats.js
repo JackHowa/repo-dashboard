@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import AppConstants from '../constants/AppConstants';
 import RepoRoutes from '../enums/RepoRoutes';
 import RepoCardStat from './RepoCardStat';
@@ -77,7 +78,6 @@ class ManagerCardStats extends Component {
     const { targetStats } = this.props;
     const { statKeyValues } = this.state;
 
-    // todo: iterate over to show card repo stats
     return (
       <div>
         {statKeyValues && statKeyValues.length > 1
@@ -93,5 +93,10 @@ class ManagerCardStats extends Component {
     );
   }
 }
+
+ManagerCardStats.propTypes = {
+  repoName: PropTypes.string.isRequired,
+  targetStats: PropTypes.instanceOf(Array).isRequired
+};
 
 export default ManagerCardStats;
