@@ -83,10 +83,15 @@ class RepoManager extends Component {
     const { targetRepoNames } = this.props;
     const { repoCounts, isLoaded, showVoteButtons, emailAddress } = this.state;
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center'
+        }}
+      >
         <h1>Client-Side JavaScript Framework Dashboard</h1>
-        <p>Enter an email to vote!</p>
-        <p>You can only vote once.</p>
+        <p>Enter an email to vote! You can only vote once.</p>
         <TextInput
           submitFunction={this.submitName}
           label="Email"
@@ -94,27 +99,35 @@ class RepoManager extends Component {
           onChangeFunction={this.handleChange}
           inputType="email"
         />
-        {targetRepoNames.map(repoName => {
-          let targetVoteCount =
-            repoCounts.find(countObject => countObject[repoName]) || 0;
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around'
+          }}
+        >
+          {targetRepoNames.map(repoName => {
+            let targetVoteCount =
+              repoCounts.find(countObject => countObject[repoName]) || 0;
 
-          if (targetVoteCount !== 0) {
-            [targetVoteCount] = Object.values(targetVoteCount);
-          }
+            if (targetVoteCount !== 0) {
+              [targetVoteCount] = Object.values(targetVoteCount);
+            }
 
-          return (
-            <RepoCard
-              key={repoName}
-              repoName={repoName}
-              voteCount={targetVoteCount}
-              isLoaded={isLoaded}
-              checkVoteCount={this.checkVoteCount}
-              showVoteButtons={showVoteButtons}
-              toggleVoteButtons={this.toggleVoteButtons}
-              emailAddress={emailAddress}
-            />
-          );
-        })}
+            return (
+              <RepoCard
+                key={repoName}
+                repoName={repoName}
+                voteCount={targetVoteCount}
+                isLoaded={isLoaded}
+                checkVoteCount={this.checkVoteCount}
+                showVoteButtons={showVoteButtons}
+                toggleVoteButtons={this.toggleVoteButtons}
+                emailAddress={emailAddress}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
