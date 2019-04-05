@@ -1,50 +1,12 @@
 import React, { Component } from 'react';
 import AppConstants from '../constants/AppConstants';
-import RepoRoutes from '../enums/RepoRoutes';
 import RepoDisplayNames from '../enums/RepoDisplayNames';
+import RepoCardStat from './RepoCardStat';
+import ManagerCardStats from './ManagerCardStats';
+import TargetStatNames from '../constants/TargetStatNames';
 
+// may want to refactor to stateless component
 class RepoCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      starGazerAmount: 0
-    };
-  }
-
-  componentDidMount() {
-    this.findStars();
-    this.interval = setInterval(
-      () => this.findStars(),
-      AppConstants.REFRESH_RATE
-    );
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const { starGazerAmount } = this.state;
-
-    if (
-      nextState.starGazerAmount !== starGazerAmount ||
-      nextProps !== this.props
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  findStars() {
-    const { repoName } = this.props;
-    fetch(`${AppConstants.GITHUB_REPOS_API}${RepoRoutes[repoName]}`)
-      .then(response => response.json())
-      .then(jsonResponse => {
-        const starGazerAmount = jsonResponse.stargazers_count;
-        this.setState({ starGazerAmount });
-      });
-  }
-
   postVote() {
     const { repoName, checkVoteCount } = this.props;
 
@@ -70,17 +32,16 @@ class RepoCard extends Component {
   }
 
   render() {
-    const { starGazerAmount } = this.state;
     const { repoName, voteCount, isLoaded } = this.props;
     const repoDisplayName = RepoDisplayNames[repoName];
     return (
       <div>
-        <h1>{repoDisplayName} Star Amount</h1>
-        <p>{starGazerAmount}</p>
+        <h1>{repoDisplayName}</h1>
+        <ManagerCardStats repoName={repoName} targetStats={TargetStatNames} />
         <button type="button" onClick={() => this.postVote()}>
           Vote
         </button>
-        <p>Vote Count: {isLoaded ? voteCount : 0}</p>
+        <RepoCardStat title="Vote Count" value={isLoaded ? voteCount : ''} />
       </div>
     );
   }
