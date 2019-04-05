@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import RepoCard from './RepoCard';
 import AppConstants from '../constants/AppConstants';
+import TextInput from './TextInput';
 
 class RepoManager extends Component {
   constructor(props) {
@@ -68,8 +70,6 @@ class RepoManager extends Component {
           }
         }
       });
-
-    // potentially change the state of vote shown
   };
 
   toggleVoteButtons = () =>
@@ -87,18 +87,13 @@ class RepoManager extends Component {
         <h1>Client-Side JavaScript Framework Dashboard</h1>
         <p>Enter an email to vote!</p>
         <p>You can only vote once.</p>
-        <form onSubmit={this.submitName}>
-          <label htmlFor="email">
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={emailAddress}
-              onChange={this.handleChange}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <TextInput
+          submitFunction={this.submitName}
+          label="Email"
+          value={emailAddress}
+          onChangeFunction={this.handleChange}
+          inputType="email"
+        />
         {targetRepoNames.map(repoName => {
           let targetVoteCount =
             repoCounts.find(countObject => countObject[repoName]) || 0;
@@ -124,5 +119,9 @@ class RepoManager extends Component {
     );
   }
 }
+
+RepoManager.propTypes = {
+  targetRepoNames: PropTypes.instanceOf(Array).isRequired
+};
 
 export default RepoManager;
